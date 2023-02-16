@@ -11,7 +11,6 @@ const inputElevation = document.querySelector('.form__input--elevation');
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10);
-  clicks = 0;
 
   constructor(coords, distance, duration) {
     this.coords = coords; // [lat, lng]
@@ -23,15 +22,12 @@ class Workout {
     // prettier-ignore
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-    // this.description = `${this.constructor.name} on ${
-    //   months[this.date.getMonth()]
-    // } ${this.date.getDate()}`;
-    //prettier-ignore
-    this.description = `${this.constructor.name} on ` +
-      new Intl.DateTimeFormat(navigator.language, { month: 'long', day: '2-digit' }).format(this.date);
-  }
-  click() {
-    this.clicks += 1;
+    this.description =
+      `${this.constructor.name} on ` +
+      new Intl.DateTimeFormat(navigator.language, {
+        month: 'long',
+        day: '2-digit',
+      }).format(this.date);
   }
 }
 
@@ -82,8 +78,8 @@ class App {
   }
 
   _getPosition() {
-    // if (navigator.geolocation)
     // prettier-ignore
+    if (navigator.geolocation)
     navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), () => alert('Unable to get your location'));
   }
 
@@ -253,7 +249,6 @@ class App {
       animate: true,
       pan: { duration: 1 },
     });
-    // workout.click();
   }
 
   _saveWorkouts() {
